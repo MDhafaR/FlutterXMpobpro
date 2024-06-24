@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_x_mobpro/model/hewan.dart';
+import 'package:flutter_x_mobpro/models/lampu.dart';
 import 'package:flutter_x_mobpro/pages/halaman_utama.dart';
 
 void main() {
@@ -9,12 +9,9 @@ void main() {
 class MainApp extends StatelessWidget {
   MainApp({super.key});
 
-  List<Hewan> data = [
-    Hewan(nama: "ayam", image: "assets/ayam.jpg"),
-    Hewan(nama: "bebek", image: "assets/bebek.jpg"),
-    Hewan(nama: "domba", image: "assets/domba.jpg"),
-    Hewan(nama: "kambing", image: "assets/kambing.jpg"),
-    Hewan(nama: "sapi", image: "assets/sapi.jpg"),
+  final List<Lampu> data = [
+    Lampu(image: "assets/on.png", kondisi: "Lampu Hidup", tombolText: "Matikan"),
+    Lampu(image: "assets/off.png", kondisi: "Lampu Mati", tombolText: "Hidupkan")
   ];
 
   @override
