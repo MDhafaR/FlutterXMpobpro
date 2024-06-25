@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_x_mobpro/pages/halaman_utama.dart';
 
 void main() {
-runApp(const MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
