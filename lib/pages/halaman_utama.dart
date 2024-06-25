@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_x_mobpro/pages/about_page.dart';
 
 class HalamanUtama extends StatefulWidget {
   const HalamanUtama({super.key});
@@ -31,12 +32,22 @@ class _HalamanUtamaState extends State<HalamanUtama> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text("Mobpro 1"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AboutScreen(),
+                    ));
+              },
+              icon: Icon(Icons.error_outline))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               //? Judul
@@ -211,7 +222,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               ),
 
               //? Hasil
-              (munculHasil)
+              (munculHasil == false)
                   ? Column(
                       children: [
                         const Divider(
@@ -227,7 +238,23 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                         ),
                         Text("$hasilBMI",
                             style: const TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.w500))
+                                fontSize: 30, fontWeight: FontWeight.w500)),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100))),
+                                minimumSize: MaterialStateProperty.all(
+                                    const Size(100, 40))),
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            child: const Text("Bagikan",
+                                style: TextStyle(fontSize: 16))),
                       ],
                     )
                   : Container()
