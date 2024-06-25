@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_x_mobpro/pages/about_page.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HalamanUtama extends StatefulWidget {
   const HalamanUtama({super.key});
@@ -39,10 +40,10 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AboutScreen(),
+                      builder: (context) => const AboutScreen(),
                     ));
               },
-              icon: Icon(Icons.error_outline))
+              icon: const Icon(Icons.error_outline))
         ],
       ),
       body: SingleChildScrollView(
@@ -222,7 +223,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
               ),
 
               //? Hasil
-              (munculHasil == false)
+              (munculHasil)
                   ? Column(
                       children: [
                         const Divider(
@@ -239,9 +240,11 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                         Text("$hasilBMI",
                             style: const TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.w500)),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
+
+                        //? Tombol Bagikan
                         ElevatedButton(
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all(
@@ -251,7 +254,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                 minimumSize: MaterialStateProperty.all(
                                     const Size(100, 40))),
                             onPressed: () {
-                              setState(() {});
+                              fungsi.shareData(beratBadan, tinggiBadan,
+                                  jenisSaatini.toString(), hasilBMI.toString());
                             },
                             child: const Text("Bagikan",
                                 style: TextStyle(fontSize: 16))),
@@ -297,5 +301,11 @@ class Functions {
     }
 
     return hasil;
+  }
+
+  void shareData(double beratBadan, double tinggiBadan, String jenisKelamin,
+      String bmi) async {
+    await Share.share(
+        "Berat badan: $beratBadan\nTinggi badan: $tinggiBadan\nJenis kelamin: $jenisKelamin\n BMI: $bmi");
   }
 }
