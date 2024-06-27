@@ -7,8 +7,34 @@ class HalamanUtama extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Mobpro 1"), backgroundColor: ColorTamplate().primaryColor,),
-      body: Center(),
+      appBar: AppBar(
+        title: Image.asset("assets/logo.png"),
+        backgroundColor: ColorTamplate.primaryColor,
+        actions: [
+          IconButton(
+              onPressed: () {}, icon: Image.asset("assets/tambahObjPutih.png"))
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Tambahkan\nData Baru",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: ColorTamplate.primaryColor),
+              textAlign: TextAlign.center,
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Image.asset("assets/tambahObject.png"),
+              iconSize: 73,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
