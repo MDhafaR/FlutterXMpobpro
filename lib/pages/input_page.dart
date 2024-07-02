@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
+import 'package:flutter_x_mobpro/bloc/barang_bloc.dart';
+import 'package:intl/intl.dart';
 
 class InputScreen extends StatelessWidget {
   InputScreen({super.key});
@@ -8,7 +11,6 @@ class InputScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String genderSaatIni = gender[0];
     return Scaffold(
         appBar: AppBar(
           backgroundColor: ColorTamplate.primaryColor,
@@ -67,44 +69,67 @@ class InputScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey[700])),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IntrinsicWidth(
+                      BlocBuilder<BarangBloc, BarangState>(
+                          builder: (context, state) {
+                        String genderSaatIni = gender[0];
+                        if (state is GenderState) {
+                          genderSaatIni = state.jenisKelamin;
+                        }
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IntrinsicWidth(
                               child: RadioListTile(
-                            dense: true,
-                            value: gender[0],
-                            groupValue: genderSaatIni,
-                            onChanged: (value) {
-                              genderSaatIni = value.toString();
-                            },
-                            title: Text("Laki - laki",
-                                style: TextStyle(
+                                dense: true,
+                                value: gender[0],
+                                groupValue: genderSaatIni,
+                                onChanged: (value) {
+                                  context
+                                      .read<BarangBloc>()
+                                      .add(ChangeGender(value.toString()));
+                                },
+                                title: Text(
+                                  "Laki - laki",
+                                  style: TextStyle(
                                     fontSize: 17,
-                                    color: ColorTamplate.primaryColor)),
-                            contentPadding: const EdgeInsets.all(0),
-                            visualDensity: const VisualDensity(horizontal: -4),
-                            activeColor: ColorTamplate.primaryColor,
-                            fillColor: MaterialStateProperty.all(
-                                ColorTamplate.primaryColor),
-                          )),
-                          IntrinsicWidth(
+                                    color: ColorTamplate.primaryColor,
+                                  ),
+                                ),
+                                contentPadding: const EdgeInsets.all(0),
+                                visualDensity:
+                                    const VisualDensity(horizontal: -4),
+                                activeColor: ColorTamplate.primaryColor,
+                                fillColor: MaterialStateProperty.all(
+                                    ColorTamplate.primaryColor),
+                              ),
+                            ),
+                            IntrinsicWidth(
                               child: RadioListTile(
-                            value: gender[1],
-                            groupValue: genderSaatIni,
-                            onChanged: (value) {},
-                            title: Text("Perempuan",
-                                style: TextStyle(
+                                value: gender[1],
+                                groupValue: genderSaatIni,
+                                onChanged: (value) {
+                                  context
+                                      .read<BarangBloc>()
+                                      .add(ChangeGender(value.toString()));
+                                },
+                                title: Text(
+                                  "Perempuan",
+                                  style: TextStyle(
                                     fontSize: 17,
-                                    color: ColorTamplate.primaryColor)),
-                            contentPadding: const EdgeInsets.only(right: 5),
-                            visualDensity: const VisualDensity(horizontal: -4),
-                            activeColor: ColorTamplate.primaryColor,
-                            fillColor: MaterialStateProperty.all(
-                                ColorTamplate.primaryColor),
-                          )),
-                        ],
-                      )
+                                    color: ColorTamplate.primaryColor,
+                                  ),
+                                ),
+                                contentPadding: const EdgeInsets.only(right: 5),
+                                visualDensity:
+                                    const VisualDensity(horizontal: -4),
+                                activeColor: ColorTamplate.primaryColor,
+                                fillColor: MaterialStateProperty.all(
+                                    ColorTamplate.primaryColor),
+                              ),
+                            ),
+                          ],
+                        );
+                      })
                     ],
                   ),
                 ),
@@ -195,53 +220,70 @@ class InputScreen extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                TextField(
-                  readOnly: true,
-                  style: TextStyle(
-                      color: ColorTamplate.primaryColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600),
-                  controller: TextEditingController(text: "20 - 12 - 2024"),
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: ColorTamplate.primaryColor)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: ColorTamplate.primaryColor)),
-                      prefixIcon: IconButton(
-                          padding: EdgeInsets.only(right: 20, left: 12),
-                          iconSize: 30,
-                          onPressed: () {
-                            showDatePicker(
-                                builder: (context, child) {
-                                  return Theme(
-                                      data: ThemeData(
-                                          textButtonTheme: TextButtonThemeData(
-                                              style: ButtonStyle(
-                                                  foregroundColor:
-                                                      MaterialStateProperty.all(
+                BlocBuilder<BarangBloc, BarangState>(
+                  builder: (context, state) {
+                    String tanggalTerpilih =
+                        DateFormat.yMd().format(DateTime.now());
+                    if (state is TanggalPinjamState) {
+                      tanggalTerpilih =
+                          DateFormat.yMd().format(state.tanggalPinjam);
+                    }
+                    return TextField(
+                      readOnly: true,
+                      style: TextStyle(
+                          color: ColorTamplate.primaryColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
+                      controller: TextEditingController(text: tanggalTerpilih),
+                      decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTamplate.primaryColor)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTamplate.primaryColor)),
+                          prefixIcon: IconButton(
+                              padding:
+                                  const EdgeInsets.only(right: 20, left: 12),
+                              iconSize: 30,
+                              onPressed: () {
+                                showDatePicker(
+                                        builder: (context, child) {
+                                          return Theme(
+                                              data: ThemeData(
+                                                  textButtonTheme: TextButtonThemeData(
+                                                      style: ButtonStyle(
+                                                          foregroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(ColorTamplate
+                                                                      .primaryColor))),
+                                                  datePickerTheme: DatePickerThemeData(
+                                                      headerBackgroundColor:
                                                           ColorTamplate
-                                                              .primaryColor))),
-                                          datePickerTheme: DatePickerThemeData(
-                                              headerBackgroundColor:
-                                                  ColorTamplate.primaryColor,
-                                              todayBackgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      ColorTamplate
-                                                          .primaryColor))),
-                                      child: child!);
-                                },
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2100));
-                          },
-                          icon: Icon(
-                            Icons.calendar_month_outlined,
-                            color: ColorTamplate.primaryColor,
-                          ))),
+                                                              .primaryColor,
+                                                      todayBackgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(ColorTamplate
+                                                                  .primaryColor))),
+                                              child: child!);
+                                        },
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2100))
+                                    .then((value) {
+                                  context
+                                      .read<BarangBloc>()
+                                      .add(TanggalPinjam(value!));
+                                });
+                              },
+                              icon: Icon(
+                                Icons.calendar_month_outlined,
+                                color: ColorTamplate.primaryColor,
+                              ))),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 16,
@@ -256,50 +298,69 @@ class InputScreen extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                TextField(
-                  readOnly: true,
-                  style: TextStyle(color: ColorTamplate.primaryColor, fontSize: 17, fontWeight: FontWeight.w600),
-                  controller: TextEditingController(text: "20 - 12 - 2024"),
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: ColorTamplate.primaryColor)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: ColorTamplate.primaryColor)),
-                      prefixIcon: IconButton(
-                        padding: EdgeInsets.only(right: 20, left: 12),
-                        iconSize: 30,
-                          onPressed: () {
-                            showDatePicker(
-                                builder: (context, child) {
-                                  return Theme(
-                                      data: ThemeData(
-                                          textButtonTheme: TextButtonThemeData(
-                                              style: ButtonStyle(
-                                                  foregroundColor:
-                                                      MaterialStateProperty.all(
+                BlocBuilder<BarangBloc, BarangState>(
+                  builder: (context, state) {
+                    String tanggalTerpilih =
+                        DateFormat.yMd().format(DateTime.now());
+                    if (state is TanggalTempoState) {
+                      tanggalTerpilih = DateFormat.yMd().format(state.tanggalTempo);
+                    }
+                    return TextField(
+                      readOnly: true,
+                      style: TextStyle(
+                          color: ColorTamplate.primaryColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600),
+                      controller: TextEditingController(text: tanggalTerpilih),
+                      decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTamplate.primaryColor)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTamplate.primaryColor)),
+                          prefixIcon: IconButton(
+                              padding:
+                                  const EdgeInsets.only(right: 20, left: 12),
+                              iconSize: 30,
+                              onPressed: () {
+                                showDatePicker(
+                                        builder: (context, child) {
+                                          return Theme(
+                                              data: ThemeData(
+                                                  textButtonTheme: TextButtonThemeData(
+                                                      style: ButtonStyle(
+                                                          foregroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(ColorTamplate
+                                                                      .primaryColor))),
+                                                  datePickerTheme: DatePickerThemeData(
+                                                      headerBackgroundColor:
                                                           ColorTamplate
-                                                              .primaryColor))),
-                                          datePickerTheme: DatePickerThemeData(
-                                              headerBackgroundColor:
-                                                  ColorTamplate.primaryColor,
-                                              todayBackgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      ColorTamplate
-                                                          .primaryColor))),
-                                      child: child!);
-                                },
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2100));
-                          },
-                          icon: Icon(
-                            Icons.calendar_month_outlined,
-                            color: ColorTamplate.primaryColor,
-                          ))),
+                                                              .primaryColor,
+                                                      todayBackgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(ColorTamplate
+                                                                  .primaryColor))),
+                                              child: child!);
+                                        },
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2100))
+                                    .then((value) {
+                                  context
+                                      .read<BarangBloc>()
+                                      .add(TanggalTempo(value!));
+                                });
+                              },
+                              icon: Icon(
+                                Icons.calendar_month_outlined,
+                                color: ColorTamplate.primaryColor,
+                              ))),
+                    );
+                  },
                 )
               ],
             ),
