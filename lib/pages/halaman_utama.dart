@@ -7,7 +7,11 @@ class HalamanUtama extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Mobpro 1"), backgroundColor: ColorTamplate().primaryColor,),
+      appBar: AppBar(
+        title: Text("Mobpro 1",
+            style: TextStyle(color: ColorTamplate.primaryText)),
+        backgroundColor: ColorTamplate.primaryColor,
+      ),
       body: Center(),
     );
   }
