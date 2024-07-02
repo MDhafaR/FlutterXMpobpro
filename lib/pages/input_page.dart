@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
 import 'package:flutter_x_mobpro/bloc/barang_bloc.dart';
+import 'package:flutter_x_mobpro/models/barang.dart';
 import 'package:intl/intl.dart';
 
 class InputScreen extends StatelessWidget {
@@ -11,6 +12,17 @@ class InputScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? namaAsli;
+    String genderSaatIni = gender[0];
+    String? barangPinjaman;
+    String? deskripsi;
+    String? kontak;
+    int? harga;
+    String tanggalTerpilih = DateFormat.yMd().format(DateTime.now());
+    String tanggalTempoTerpilih = DateFormat.yMd().format(DateTime.now());
+
+    List<Barang> datanya = [];
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: ColorTamplate.primaryColor,
@@ -18,7 +30,19 @@ class InputScreen extends StatelessWidget {
           title: Image.asset("assets/logo.png"),
           actions: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                datanya.add(Barang(
+                    namaLengkap: namaAsli,
+                    jenisKelamin: genderSaatIni,
+                    barangPinjaman: barangPinjaman,
+                    deskripsi: deskripsi,
+                    kontak: kontak,
+                    hargaPerHari: harga,
+                    tanggalPinjam: tanggalTerpilih,
+                    tanggalTempo: tanggalTempoTerpilih));
+                context.read<BarangBloc>().add(OnSubmit(datanya));
+                Navigator.pop(context);
+              },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -37,6 +61,9 @@ class InputScreen extends StatelessWidget {
               children: [
                 //? Input Nama Asli
                 TextField(
+                  onChanged: (value) {
+                    namaAsli = value;
+                  },
                   decoration: InputDecoration(
                     hintText: "Nama Asli",
                     contentPadding: const EdgeInsets.all(15),
@@ -71,7 +98,6 @@ class InputScreen extends StatelessWidget {
                       ),
                       BlocBuilder<BarangBloc, BarangState>(
                           builder: (context, state) {
-                        String genderSaatIni = gender[0];
                         if (state is GenderState) {
                           genderSaatIni = state.jenisKelamin;
                         }
@@ -139,6 +165,9 @@ class InputScreen extends StatelessWidget {
 
                 //? Input Barang
                 TextField(
+                  onChanged: (value) {
+                    barangPinjaman = value;
+                  },
                   decoration: InputDecoration(
                     hintText: "Barang Pinjaman",
                     contentPadding: const EdgeInsets.all(15),
@@ -157,7 +186,10 @@ class InputScreen extends StatelessWidget {
 
                 //? Input Deskripsi
                 TextField(
-                  onChanged: (value) {},
+                  maxLength: 150,
+                  onChanged: (value) {
+                    deskripsi = value;
+                  },
                   maxLines: 7, //null jika mau berubah menyesuaikan
                   decoration: InputDecoration(
                     hintText: "Deskripsi",
@@ -177,6 +209,9 @@ class InputScreen extends StatelessWidget {
 
                 //? Input Kontak
                 TextField(
+                  onChanged: (value) {
+                    kontak = value;
+                  },
                   decoration: InputDecoration(
                     hintText: "Kontak",
                     contentPadding: const EdgeInsets.all(15),
@@ -193,8 +228,11 @@ class InputScreen extends StatelessWidget {
                   height: 26,
                 ),
 
-                //? Input Nama Asli
+                //? Input Harga
                 TextField(
+                  onChanged: (value) {
+                    harga = int.parse(value);
+                  },
                   decoration: InputDecoration(
                     hintText: "Harga / hari",
                     contentPadding: const EdgeInsets.all(15),
@@ -222,8 +260,6 @@ class InputScreen extends StatelessWidget {
                 ),
                 BlocBuilder<BarangBloc, BarangState>(
                   builder: (context, state) {
-                    String tanggalTerpilih =
-                        DateFormat.yMd().format(DateTime.now());
                     if (state is TanggalPinjamState) {
                       tanggalTerpilih =
                           DateFormat.yMd().format(state.tanggalPinjam);
@@ -300,10 +336,9 @@ class InputScreen extends StatelessWidget {
                 ),
                 BlocBuilder<BarangBloc, BarangState>(
                   builder: (context, state) {
-                    String tanggalTerpilih =
-                        DateFormat.yMd().format(DateTime.now());
                     if (state is TanggalTempoState) {
-                      tanggalTerpilih = DateFormat.yMd().format(state.tanggalTempo);
+                      tanggalTempoTerpilih =
+                          DateFormat.yMd().format(state.tanggalTempo);
                     }
                     return TextField(
                       readOnly: true,
@@ -311,7 +346,8 @@ class InputScreen extends StatelessWidget {
                           color: ColorTamplate.primaryColor,
                           fontSize: 17,
                           fontWeight: FontWeight.w600),
-                      controller: TextEditingController(text: tanggalTerpilih),
+                      controller:
+                          TextEditingController(text: tanggalTempoTerpilih),
                       decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           enabledBorder: OutlineInputBorder(

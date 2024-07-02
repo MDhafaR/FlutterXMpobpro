@@ -7,7 +7,7 @@ final class BarangInitial extends BarangState {}
 
 final class BarangSuccess extends BarangState {
   final List<Barang> totalBarang;
-
+  
   BarangSuccess(this.totalBarang);
 }
 
