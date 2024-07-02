@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorTamplate {
-  Color primaryColor = Color.fromARGB(255, 190, 111, 229);
+  static Color primaryColor = Color(0xFFdae2ff);
+  static Color primaryText = Color(0xFF485d92);
 }
