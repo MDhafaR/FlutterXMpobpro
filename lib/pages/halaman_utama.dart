@@ -42,9 +42,10 @@ class HalamanUtama extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 15,
+              itemCount: 10,
               itemBuilder: (context, index) {
-                return ItemList();
+                int date = 29 - index;
+                return ItemList(date: date);
               },
             ),
           )
