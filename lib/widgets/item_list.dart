@@ -1,16 +1,26 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_x_mobpro/pages/detail_page.dart';
 
 class ItemList extends StatelessWidget {
-  ItemList({required this.date, super.key});
+  const ItemList({required this.date, super.key});
 
-  int date;
+  final int date;
 
   @override
   Widget build(BuildContext context) {
+    String judul = "Kuliah Mobpro $date Feb";
+    String isi =
+        "Yey, hari ini belajar membuat aplikasi android counter dan berhasil. Hehe.. Mudah2an modul ini berguna";
     return InkWell(
       onTap: () {
-        BotToast.showText(text: "Belum Bisa", align: const Alignment(0, 0.98));
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return DetailScreen(
+              judul: judul,
+              isi: isi,
+            );
+          },
+        ));
       },
       child: Column(
         children: [
@@ -19,19 +29,18 @@ class ItemList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Kuliah Mobpro $date Feb",
-                    style:
-                        const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                Text(judul,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700)),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                    "Yey, hari ini belajar membuat aplikasi android counter dan berhasil. Hehe.. Mudah2an modul ini berguna",
-                    style: TextStyle(fontSize: 18)),
+                Text(isi, style: const TextStyle(fontSize: 18)),
                 const SizedBox(
                   height: 10,
                 ),
-                Text("2024-02-$date 12:34:56", style: const TextStyle(fontSize: 18)),
+                Text("2024-02-$date 12:34:56",
+                    style: const TextStyle(fontSize: 18)),
               ],
             ),
           ),

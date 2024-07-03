@@ -1,6 +1,6 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
+import 'package:flutter_x_mobpro/pages/detail_page.dart';
 import 'package:flutter_x_mobpro/widgets/item_list.dart';
 
 class HalamanUtama extends StatelessWidget {
@@ -11,8 +11,11 @@ class HalamanUtama extends StatelessWidget {
     return Scaffold(
       floatingActionButton: InkWell(
         onTap: () {
-          BotToast.showText(
-              text: "Belum Bisa", align: const Alignment(0, 0.98));
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return DetailScreen();
+            },
+          ));
         },
         child: Container(
           decoration: BoxDecoration(

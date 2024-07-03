@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_x_mobpro/pages/detail_page.dart';
 import 'package:flutter_x_mobpro/pages/halaman_utama.dart';
 
 void main() {
@@ -14,7 +13,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       builder: BotToastInit(),
-      home: DetailScreen(),
+      home: const HalamanUtama(),
     );
   }
 }
