@@ -2,34 +2,40 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 class ItemList extends StatelessWidget {
-  const ItemList({super.key});
+  const ItemList(
+      {required this.nama, required this.nim, required this.kelas, super.key});
+
+  final String nama;
+  final String nim;
+  final String kelas;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BotToast.showText(
-              text: "Belum Bisa", align: const Alignment(0, 0.98));
+        BotToast.showText(text: nama, align: const Alignment(0, 0.98));
       },
-      child: const Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Kuliah Mobpro 29 Feb",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                Text(nama,
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                    "Yey, hari ini belajar membuat aplikasi android counter dan berhasil. Hehe.. Mudah2an modul ini berguna",
+                    nim,
                     style: TextStyle(fontSize: 18)),
                 SizedBox(
                   height: 10,
                 ),
-                Text("2024-02-29 12:34:56", style: TextStyle(fontSize: 18)),
+                Text(kelas, style: TextStyle(fontSize: 18)),
               ],
             ),
           ),

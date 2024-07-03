@@ -4,8 +4,40 @@ import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
 import 'package:flutter_x_mobpro/widgets/item_list.dart';
 
 class HalamanUtama extends StatelessWidget {
-  const HalamanUtama({super.key});
+  HalamanUtama({super.key});
 
+  final List<String> nama = [
+    "Muhammad Dhafa Ramadhani",
+    "Anisa",
+    "Adrian Maulana",
+    "IGN Brindawan tri guna yoga",
+    "Balgis Auliya Humairah",
+    "Krisnia Syahwadani",
+    "Muhammad Raihan Fahrifi",
+    "Muhammad Zakiy Mubarak",
+  ];
+
+  final List<String> nim = [
+    "6706223068",
+    "6706221728",
+    "6706220047",
+    "6706223067",
+    "6706223008",
+    "6706223000",
+    "6706200009",
+    "6535465563",
+  ];
+
+  final List<String> kelas = [
+    "46-04",
+    "47-03",
+    "46-04",
+    "46-04",
+    "46-01",
+    "46-04",
+    "46-04",
+    "46-02",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +73,22 @@ class HalamanUtama extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: 15,
-              itemBuilder: (context, index) {
-                return ItemList();
-              },
-            ),
-          )
+            child: CustomScrollView(
+              slivers: [
+                SliverList.builder(
+                  itemCount: nama.length,
+                  itemBuilder: (context, index) {
+                    return ItemList(
+                    nama: nama[index], nim: nim[index], kelas: kelas[index]);
+                },),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 80,
+                  ),
+                ),
+              ],
+            )
+          ),
         ],
       ),
     );
