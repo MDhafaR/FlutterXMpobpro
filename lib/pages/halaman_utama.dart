@@ -1,6 +1,6 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
+import 'package:flutter_x_mobpro/pages/detail_page.dart';
 import 'package:flutter_x_mobpro/widgets/item_list.dart';
 
 class HalamanUtama extends StatelessWidget {
@@ -29,22 +29,25 @@ class HalamanUtama extends StatelessWidget {
   ];
 
   final List<String> kelas = [
-    "46-04",
-    "47-03",
-    "46-04",
-    "46-04",
-    "46-01",
-    "46-04",
-    "46-04",
-    "46-02",
+    "D3IF-46-04",
+    "D3IF-46-03",
+    "D3IF-46-04",
+    "D3IF-46-05",
+    "D3IF-46-01",
+    "D3IF-46-04",
+    "D3IF-46-04",
+    "D3IF-46-02",
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: InkWell(
         onTap: () {
-          BotToast.showText(
-              text: "Belum Bisa", align: const Alignment(0, 0.98));
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return DetailScreen(kelasTerpilih: kelas[4],);
+            },
+          ));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -73,22 +76,22 @@ class HalamanUtama extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: CustomScrollView(
-              slivers: [
-                SliverList.builder(
-                  itemCount: nama.length,
-                  itemBuilder: (context, index) {
-                    return ItemList(
-                    nama: nama[index], nim: nim[index], kelas: kelas[index]);
-                },),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 80,
-                  ),
+              child: CustomScrollView(
+            slivers: [
+              SliverList.builder(
+                itemCount: nama.length,
+                itemBuilder: (context, index) {
+                  return ItemList(
+                      nama: nama[index], nim: nim[index], kelas: kelas[index]);
+                },
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 80,
                 ),
-              ],
-            )
-          ),
+              ),
+            ],
+          )),
         ],
       ),
     );

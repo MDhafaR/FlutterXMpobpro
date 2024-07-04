@@ -1,5 +1,5 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_x_mobpro/pages/detail_page.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList(
@@ -13,33 +13,39 @@ class ItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BotToast.showText(text: nama, align: const Alignment(0, 0.98));
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return DetailScreen(
+              nama: nama,
+              nim: nim,
+              kelasTerpilih: kelas,
+            );
+          },
+        ));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(nama,
                     style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-                SizedBox(
+                        const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
-                    nim,
-                    style: TextStyle(fontSize: 18)),
-                SizedBox(
+                Text(nim, style: const TextStyle(fontSize: 18)),
+                const SizedBox(
                   height: 10,
                 ),
-                Text(kelas, style: TextStyle(fontSize: 18)),
+                Text(kelas, style: const TextStyle(fontSize: 18)),
               ],
             ),
           ),
-          Divider(
+          const Divider(
             color: Colors.grey,
             thickness: 1,
           )
