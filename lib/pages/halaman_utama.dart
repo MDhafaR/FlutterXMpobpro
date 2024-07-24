@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
+import 'package:flutter_x_mobpro/bloc/product_bloc.dart';
+import 'package:flutter_x_mobpro/models/note_model.dart';
 import 'package:flutter_x_mobpro/pages/detail_page.dart';
 import 'package:flutter_x_mobpro/widgets/item_list.dart';
 
@@ -44,11 +47,30 @@ class HalamanUtama extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                int date = 29 - index;
-                return ItemList(date: date);
+            child: BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is ProductSuccsess) {
+                  List<NoteModel> data = state.note;
+                  return ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return ItemList(
+                        data: data[index],
+                      );
+                    },
+                  );
+                } else if (state is ProductEmpty) {
+                  return Center(
+                    child: Text("empty"),
+                  );
+                }
+                return Center(
+                  child: Text("empty"),
+                );
               },
             ),
           )
