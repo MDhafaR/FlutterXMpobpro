@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_x_mobpro/Color/color_tamplate.dart';
+import 'package:flutter_x_mobpro/bloc/mahasiswa_bloc.dart';
 import 'package:flutter_x_mobpro/pages/detail_page.dart';
 import 'package:flutter_x_mobpro/widgets/item_list.dart';
 
@@ -45,7 +47,7 @@ class HalamanUtama extends StatelessWidget {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return DetailScreen(kelasTerpilih: kelas[4],);
+              return DetailScreen();
             },
           ));
         },
@@ -75,22 +77,41 @@ class HalamanUtama extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-              child: CustomScrollView(
-            slivers: [
-              SliverList.builder(
-                itemCount: nama.length,
-                itemBuilder: (context, index) {
-                  return ItemList(
-                      nama: nama[index], nim: nim[index], kelas: kelas[index]);
-                },
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 80,
-                ),
-              ),
-            ],
+          Expanded(child: BlocBuilder<MahasiswaBloc, MahasiswaState>(
+            builder: (context, state) {
+              if (state is MahasiswaLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is MahasiswaDataSuccess) {
+                if (state.data.isEmpty) {
+                  return Center(
+                    child: Text("data is Empty"),
+                  );
+                }
+                return CustomScrollView(
+                  slivers: [
+                    SliverList.builder(
+                      itemCount: state.data.length,
+                      itemBuilder: (context, index) {
+                        return ItemList(
+                          dataMhs: state.data[index],
+                        );
+                      },
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 80,
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return Center(
+                child: Text("data is Empty"),
+              );
+            },
           )),
         ],
       ),

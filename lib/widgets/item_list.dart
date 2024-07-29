@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_x_mobpro/models/mahasiswa.dart';
 import 'package:flutter_x_mobpro/pages/detail_page.dart';
 
 class ItemList extends StatelessWidget {
-  const ItemList(
-      {required this.nama, required this.nim, required this.kelas, super.key});
+  ItemList({required this.dataMhs, super.key});
 
-  final String nama;
-  final String nim;
-  final String kelas;
+  Mahasiswa dataMhs;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +14,7 @@ class ItemList extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
             return DetailScreen(
-              nama: nama,
-              nim: nim,
-              kelasTerpilih: kelas,
+              data: dataMhs,
             );
           },
         ));
@@ -31,17 +27,17 @@ class ItemList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(nama,
-                    style:
-                        const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                Text(dataMhs.nama,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700)),
                 const SizedBox(
                   height: 10,
                 ),
-                Text(nim, style: const TextStyle(fontSize: 18)),
+                Text(dataMhs.nim, style: const TextStyle(fontSize: 18)),
                 const SizedBox(
                   height: 10,
                 ),
-                Text(kelas, style: const TextStyle(fontSize: 18)),
+                Text(dataMhs.kelas, style: const TextStyle(fontSize: 18)),
               ],
             ),
           ),

@@ -10,3 +10,10 @@ final class KelasState extends MahasiswaState {
 
   KelasState({required this.kelas});
 }
+final class MahasiswaDataSuccess extends MahasiswaState {
+  final List<Mahasiswa> data;
+
+  MahasiswaDataSuccess({required this.data});
+}
+
+class MahasiswaLoading extends MahasiswaState {}
