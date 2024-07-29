@@ -5,7 +5,7 @@ import 'package:flutter_x_mobpro/pages/detail_page.dart';
 class ItemList extends StatelessWidget {
   ItemList({required this.dataMhs, super.key});
 
-  Mahasiswa dataMhs;
+  final Mahasiswa dataMhs;
 
   @override
   Widget build(BuildContext context) {

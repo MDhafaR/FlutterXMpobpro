@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_x_mobpro/models/mahasiswa.dart';
 import 'package:flutter_x_mobpro/services/database_instance.dart';
 import 'package:meta/meta.dart';
-import 'package:sqflite/sqflite.dart';
-
 part 'mahasiswa_event.dart';
 part 'mahasiswa_state.dart';
 
